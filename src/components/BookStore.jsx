@@ -1,17 +1,34 @@
-import React, { Component } from 'react';
-import BookList from "./BookList"
-import BookDetail from "./BookDetail"
-import { books } from "../data/books"
+import React, { Component } from "react";
+import BookList from "./BookList";
+import BookDetail from "./BookDetail";
+import { books } from "../data/books";
 
 class BookStore extends Component {
-    render() {
-        return (
-            <div classNme="Row">
-                <BookList books={books} />
-                <BookDetail books={books} />                
-            </div>
-        );
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      bookSelected: null,
+    };
+  }
+
+  changeBook = (id) => this.setState({ bookSelected: id });
+
+  render() {
+    return (
+      <div className="row">
+        <BookList
+          books={books}
+          bookSelected={this.state.bookSelected}
+          changeBook={this.changeBook}
+        />
+        <BookDetail
+          books={books}
+          bookSelected={this.state.bookSelected}
+          addToCart={this.props.addToCart}
+        />
+      </div>
+    );
+  }
 }
 
 export default BookStore;

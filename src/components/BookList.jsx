@@ -1,6 +1,34 @@
-import React from 'react';
-import Book from "./Book"
+import React, { Component } from "react";
+import BookList from "./BookList";
+import BookDetail from "./BookDetail";
+import { books } from "../data/books";
 
-export default ({books}) => <ul className="col-sm-4">{books.map((book, index) => <Book {...book} key={index} />)}</ul>
+class BookStore extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bookSelected: null,
+    };
+  }
 
-export default BookList;
+  changeBook = (id) => this.setState({ bookSelected: id });
+
+  render() {
+    return (
+      <div className="row">
+        <BookList
+          books={books}
+          bookSelected={this.state.bookSelected}
+          changeBook={this.changeBook}
+        />
+        <BookDetail
+          books={books}
+          bookSelected={this.state.bookSelected}
+          addToCart={this.props.addToCart}
+        />
+      </div>
+    );
+  }
+}
+
+export default BookStore;
